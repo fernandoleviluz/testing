@@ -325,9 +325,12 @@ const panel = (() => {
 
                 const times = time.innnetHTML.split(':')
 
-                const minute = parseInt(times)
+                if(times) {
+                    const minute = parseInt(times)
+                    if(minute > 9) client.remove()
+                }
 
-                if(minute > 9 || time.innnetHTML.indexOf('SAIU') != -1) client.remove()
+                if(time.innnetHTML.indexOf('SAIU') != -1) client.remove()
             });
         })
     }
