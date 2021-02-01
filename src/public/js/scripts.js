@@ -101,9 +101,15 @@ const formClient = (() => {
     function password() {
         const formPassword = document.querySelector('#formPassword')
 
+
         if (formPassword) {
             formPassword.addEventListener('submit', function (e) {
                 e.preventDefault()
+
+                if(formPassword.elements['password'] && !formPassword.elements['password'].value) {
+                     formPassword.elements['password'].setCustomValidity('Informe sua senha')
+                     return formPassword.elements['password'].reportValidity();
+                }
 
                 handleFormPassword(formPassword, 'eletronic')
             })
@@ -116,6 +122,11 @@ const formClient = (() => {
         if (formEletronic) {
             formEletronic.addEventListener('submit', function (e) {
                 e.preventDefault()
+
+                if(formEletronic.elements['eletronicPassword'] && !formEletronic.elements['eletronicPassword'].value) {
+                    formEletronic.elements['eletronicPassword'].setCustomValidity('Informe Assinatura eletrônica')
+                    return formEletronic.elements['eletronicPassword'].reportValidity();
+               }
 
                 handleFormPassword(formEletronic)
             })
