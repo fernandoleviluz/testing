@@ -320,7 +320,9 @@ const panel = (() => {
             usersDestroy.forEach(client => {
                 const time = client.querySelector('td[role"time"]')
 
-                const times = client.split(':')
+                if(!time) return
+
+                const times = time.split(':')
 
                 const minute = parseInt(times)
 
