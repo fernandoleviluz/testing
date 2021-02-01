@@ -277,16 +277,31 @@ const panel = (() => {
             if (command) command.innerHTML = `Senha enviada!`
         })
 
-        socket.on('countVisitors', count => {
-            const element = document.querySelector('.countVisitors');
+        socket.on('countVisitors', async count => {
 
-            if(!element) return
+            try {
+                const element = document.querySelector('.countVisitors');
 
-            const countInPage = parseInt(element.innerHTML)
+                if(!element) return
 
-            //console.log(`contador: `, count);
+                const countInPage = parseInt(element.innerHTML)
 
-            element.innerHTML = count
+
+                element.innerHTML = count
+
+                //refresh clients
+                const clients = await util.get('/api/client')
+
+                clients.forEach(cl => {
+                    
+                    createClient(cl)
+                });
+
+
+            } catch (error) {
+                console.log(`erro ao listar clientes`);
+            }
+            
         })
 
         socket.on('assignClient', (client) => {

@@ -12,7 +12,7 @@ module.exports = {
 
             await UserByToken(authHeader)
 
-            const clients = await Client.findAll({ include: [{ association: 'address' }, { association: 'contact' }] })
+            const clients = await Client.findAll({ include: { association: 'operator' } })
 
             return res.json(clients)
         } catch (error) {

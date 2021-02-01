@@ -32,6 +32,7 @@ routes.post('/api/reset', UserController.reset)
 
 //Client
 routes.post('/api/client', ClientController.insert)
+routes.get('/api/client', ClientController.index)
 routes.post('/api/client-password', ClientController.insert)
 
 //session
