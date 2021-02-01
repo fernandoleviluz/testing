@@ -288,7 +288,7 @@ const panel = (() => {
         socket.on('clientDestroy', (client) => {
             const roleId = document.querySelector(`tr[data-id="${client.id}"]`)
 
-            roleId.remove()
+            if(roleId) roleId.remove()
         })
 
         socket.on('await', (client) => {
