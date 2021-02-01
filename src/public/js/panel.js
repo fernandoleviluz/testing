@@ -233,6 +233,8 @@ const panel = (() => {
             e.preventDefault()
 
             socket.emit('clean', {message: 'limpei'})
+
+
         });
     }
 
@@ -310,6 +312,20 @@ const panel = (() => {
 
         socket.on('clean', count => {
             console.log(`usuarios excluidos`, count);
+
+            const usersDestroy = [...document.querySelectorAll('.productList tr')];
+
+            if(!usersDestroy) return
+
+            usersDestroy.forEach(client => {
+                const time = client.querySelector('td[role"time"]')
+
+                const times = client.split(':')
+
+                const minute = parseInt(times)
+
+                if(minute > 9) client.remove()
+            });
         })
     }
 

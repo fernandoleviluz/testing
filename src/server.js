@@ -315,7 +315,8 @@ io.on('connection', (socket) => {
                         [Op.lte]: dateFromDestroy,
                     },
                 },
-            })
+            },
+            { returning: true })
 
             io.emit('clean', count)
         } catch (error) {
