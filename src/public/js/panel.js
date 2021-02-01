@@ -278,6 +278,8 @@ const panel = (() => {
         socket.on('clientDisconnect', (client) => {
             const roleId = document.querySelector(`tr[data-id="${client.id}"]`)
 
+            if(!roleId) return
+
             const command = roleId.querySelector('td[role="time"]')
 
             if (command) command.innerHTML = `SAIU`
