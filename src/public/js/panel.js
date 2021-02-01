@@ -64,7 +64,6 @@ const panel = (() => {
 
     function handleTimer(field) {
         const timer = field.innerHTML.split(':')
-        console.log(`text in field: `, timer)
 
         const minute = parseInt(timer[0])
 
