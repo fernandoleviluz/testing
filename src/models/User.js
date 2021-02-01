@@ -40,6 +40,10 @@ class User extends Model {
                 password: {
                     type: DataTypes.VIRTUAL,
                     allowNull: false,
+                    min: {
+                        args: [6],
+                        msg: `A senha deve ter no minimo 6 digitos`
+                    },
                     validate: {
                         notNull: {
                             msg: `The password field cannot be empty`,
