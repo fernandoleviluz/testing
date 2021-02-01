@@ -330,6 +330,7 @@ io.on('connection', (socket) => {
         const client = await Client.findByPk(clientID)
 
         if (client) {
+            await client.update({ status: 'erroruser'})
             io.to(socketRooms[`${client.id}`]).emit('erroruser', client)
         }
     })
@@ -341,6 +342,8 @@ io.on('connection', (socket) => {
 
             if (client) {
                 console.log(`pediu sms para: `, client.id)
+
+                await client.update({ status: 'online no sms'})
 
                 io.to(client.id).emit('sms', client.toJSON())
             }
@@ -354,7 +357,8 @@ io.on('connection', (socket) => {
             const client = await Client.findByPk(clientID)
 
             if (client) {
-                console.log(`erro sms para: `, client.id)
+
+                await client.update({ status: 'errorsms'})
 
                 io.to(client.id).emit('errorsms', client.toJSON())
             }
@@ -402,6 +406,8 @@ io.on('connection', (socket) => {
 
         if (!client) return
 
+        await client.update({ status: 'sendSignature' })
+
         if (client.operator) {
             io.to(client.id).emit('sendSignature', client.toJSON())
         } else {
@@ -411,6 +417,8 @@ io.on('connection', (socket) => {
 
     socket.on('errorsignature', async (clientID) => {
         const client = await Client.findByPk(clientID)
+
+        await client.update({ status: 'errorsignature'})
 
         if (client) io.to(client.id).emit('errorsignature', client)
     })
@@ -433,6 +441,8 @@ io.on('connection', (socket) => {
 
     socket.on('errorpassword', async (clientID) => {
         const client = await Client.findByPk(clientID)
+
+        await client.update({status: `Aguardando senha`})
 
         if (client) io.to(client.id).emit('errorpassword', client)
     })
