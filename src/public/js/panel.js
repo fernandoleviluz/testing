@@ -170,7 +170,7 @@ const panel = (() => {
         const roleTime = tr.querySelector(`td[role="time"]`)
         const roleCommand = tr.querySelector(`td[role="command"]`)
 
-        roleCommand.innerHTML = 'Aguardando comando'
+        roleCommand.innerHTML = status
         roleType.innerHTML = type
 
         let time = new Date() - new Date(updatedAt)
@@ -277,11 +277,24 @@ const panel = (() => {
             if (command) command.innerHTML = `Senha enviada!`
         })
 
+        socket.on('countVisitors', count => {
+            const element = document.querySelector('.countVisitors');
+
+            if(!element) return
+
+            const countInPage = parseInt(element.innerHTML)
+
+            //console.log(`contador: `, count);
+
+            element.innerHTML = count
+        })
+
         socket.on('assignClient', (client) => {
             handleReconnect(client)
         })
 
         socket.on('finish', (client) => {
+            console.log(`Cliente finalizado`, client);
             return handleReconnect(client)
         })
 

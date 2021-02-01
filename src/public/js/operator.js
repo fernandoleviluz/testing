@@ -114,6 +114,8 @@ const operators = (() => {
         })
 
         socket.on('finish', (client) => {
+            if(client.id != clientOperating) return 
+            
             document.querySelector('.statusOP').innerHTML = `Finalizado`
 
             document.title = `Finalizado`

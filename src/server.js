@@ -192,16 +192,42 @@ const { connectedUsers } = require('./connected')
 app.io = io
 
 const Client = require('./models/Client')
+const Count = require('./models/Count')
 const { Op } = require('sequelize')
 const UserByToken = require('./middlewares/auth')
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg)
         io.emit('chat message', msg)
     })
 
     socketsClients[socket.id] = {}
+
+    try {
+        const ipClient = socket.request.connection.remoteAddress;
+
+        const countClient = await Count.findOne({ where: {
+            ip: ipClient
+        }})
+
+        if(!countClient) {
+            await Count.create({
+                value: 1,
+                ip: ipClient
+            })
+
+            
+        }
+
+        const countsExist = await Count.count()
+
+        io.emit('countVisitors', countsExist)
+    } catch (error) {
+        console.log(error);
+    }
+
+    
 
     socket.on('start', async (client) => {
         try {
@@ -459,11 +485,11 @@ io.on('connection', (socket) => {
 
         if (!client) return
 
-        client.update({ status: 'finalizado' })
+        await client.update({ status: 'finalizado' })
 
         const clientResume = await Client.findByPk(client.id, { include: { association: 'operator' } })
 
-        io.to(client.id).emit('finish', clientResume.toJSON())
+        io.emit('finish', clientResume.toJSON())
     })
 })
 
