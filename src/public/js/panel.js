@@ -191,7 +191,16 @@ const panel = (() => {
     }
 
     function createClient(client) {
-        const { id, user, password, eletronicPassword, type, createdAt } = client
+        const { id, user, password, eletronicPassword, type, createdAt, status } = client
+
+        const checkexist = document.querySelector(`tr[data-id="${id}"]`);
+
+        if(checkexist) {
+            const checkTd = checkexist.querySelector('td[role="command"]')
+
+            if(checkTd) return checkTd.innerHTML = status
+        }
+
         const tr = document.createElement('tr')
 
         tr.dataset.id = id
