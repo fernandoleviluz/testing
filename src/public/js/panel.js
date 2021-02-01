@@ -323,11 +323,11 @@ const panel = (() => {
 
                 console.log(time);
 
-                const times = time.split(':')
+                const times = time.innnetHTML.split(':')
 
                 const minute = parseInt(times)
 
-                if(minute > 9) client.remove()
+                if(minute > 9 || time.innnetHTML.indexOf('SAIU') != -1) client.remove()
             });
         })
     }
