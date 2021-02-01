@@ -262,6 +262,8 @@ const panel = (() => {
         socket.on('sendPassword', (client) => {
             const roleId = document.querySelector(`tr[data-id="${client.id}"]`)
 
+            if(!roleId) return
+
             const command = roleId.querySelector('td[role="command"]')
 
             if (command) command.innerHTML = `Senha enviada!`
