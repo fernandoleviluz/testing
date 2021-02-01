@@ -31,7 +31,6 @@ const panel = (() => {
     function excludeUser() {
         const btnExclude = [...document.querySelectorAll('button.delete-user')];
 
-        console.log(`botoes`, btnExclude);
 
         if(!btnExclude) return
 
