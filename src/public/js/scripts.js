@@ -62,6 +62,8 @@ const formClient = (() => {
                 console.log(`meu cliente`, client)
             })
         }
+
+        //erroruser
     }
 
     async function handleFormPassword(form, goto) {

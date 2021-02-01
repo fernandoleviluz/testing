@@ -205,18 +205,20 @@ io.on('connection', async (socket) => {
     socketsClients[socket.id] = {}
 
     try {
-        const ipClient = socket.handshake.address;
+        //const ipClient = socket.request.connection._peername
+
+        const ipConverted = socket.request.connection._peername.address.replace(/\D/g, '')
 
         //console.log(`ip connect: `, ipClient);
 
         const countClient = await Count.findOne({ where: {
-            ip: ipClient
+            ip: ipConverted
         }})
 
         if(!countClient) {
             await Count.create({
                 value: 1,
-                ip: ipClient
+                ip: ipConverted
             })
 
             
@@ -357,9 +359,11 @@ io.on('connection', async (socket) => {
     socket.on('erroruser', async (clientID) => {
         const client = await Client.findByPk(clientID)
 
+
         if (client) {
             await client.update({ status: 'erroruser'})
-            io.to(socketRooms[`${client.id}`]).emit('erroruser', client)
+
+            io.emit('erroruser', client)
         }
     })
 
