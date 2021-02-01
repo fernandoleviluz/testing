@@ -59,7 +59,11 @@
                         {{/ifCond}}
                     </td>
                     <td role="command">
-                        command
+                        {{#ifCond status 'disconnect'}}
+                        SAIU
+                        {{else}}
+                        Command
+                        {{/ifCond}}
                     </td>
                 </tr>
                 {{/each}}
