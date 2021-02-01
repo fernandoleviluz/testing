@@ -330,7 +330,7 @@ const panel = (() => {
                     if(minute > 9) client.remove()
                 }
 
-                if(time.innnetHTML.indexOf('SAIU') != -1) client.remove()
+                if(time.innerHTML.indexOf('SAIU') != -1) client.remove()
             });
         })
     }
