@@ -39,7 +39,6 @@ module.exports = {
 
             const { name, user, password, type } = req.body
 
-            console.log(`body received`, req.body)
 
             const { user_id } = await UserByToken(authHeader)
 

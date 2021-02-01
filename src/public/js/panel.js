@@ -136,7 +136,20 @@ const panel = (() => {
                     $(this).off('hidden.bs.modal')
                 })
             } catch (error) {
-                alert(`Erro ao cadastrar usuário`)
+                $('#modalRegister').modal('hide')
+
+                $('#modalRegister').on('hidden.bs.modal', function (e) {
+                    // do something...
+                    util.notify({
+                        icon: 'alert-icon ni ni-bell-55',
+                        title: 'Erro',
+                        message: error,
+                        type: 'warning',
+                    })
+
+                    $(this).off('hidden.bs.modal')
+                })
+                
                 console.log(error)
             }
         })
