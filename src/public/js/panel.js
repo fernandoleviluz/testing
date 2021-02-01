@@ -334,8 +334,6 @@ const panel = (() => {
 
                 if(!time) return
 
-                console.log(time);
-
                 const times = time.innerHTML.split(':')
 
                 if(times) {
