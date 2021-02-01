@@ -278,7 +278,7 @@ io.on('connection', async (socket) => {
                     var diffminutes = diffmiliseconds / 60
 
                     if (diffminutes > 1) {
-                        if (check.status == 'disconnect') await client.destroy()
+                        if (check.status == 'disconnect' || diffminutes > 10) await client.destroy()
 
                         io.emit('clientDestroy', client)
                     }
