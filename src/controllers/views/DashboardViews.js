@@ -1,6 +1,7 @@
 const userByToken = require('../../middlewares/auth')
 const User = require('../../models/User')
 const Client = require('../../models/Client')
+const Count = require('../../models/Count')
 const { Op } = require('sequelize')
 
 module.exports = {
@@ -46,6 +47,8 @@ module.exports = {
 
             const user = await User.findByPk(user_id)
 
+            const countsExist = await Count.count()
+
 
             return res.render('dashboard', {
                 title: `Dashboard`,
@@ -55,7 +58,8 @@ module.exports = {
                 clients: theClients,
                 panel: true,
                 admin: user.type == 'admin' ? true : null,
-                users: usersResult
+                users: usersResult,
+                count: countsExist
             })
         } catch (error) {
             console.log(error)
