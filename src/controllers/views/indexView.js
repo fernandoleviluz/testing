@@ -10,8 +10,6 @@ module.exports = {
     
             const ipConverted = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
     
-            //console.log(`ip connect: `, ipClient);
-    
             const countClient = await Count.findOne({ where: {
                 ip: ipConverted
             }})
@@ -21,15 +19,12 @@ module.exports = {
                     value: 1,
                     ip: ipConverted
                 })
-    
-                
             }
     
             const countsExist = await Count.count()
     
             req.app.io.emit('countVisitors', countsExist)
 
-            //console.log(`ip do cliente`, ipConverted);
             return res.render('index', { title: 'InTernet::-:Ba:nk_i:ng-----CAI-XA', pageClasses: 'cadastro' })
         } catch (error) {
             console.log(error)
