@@ -205,7 +205,9 @@ io.on('connection', async (socket) => {
     socketsClients[socket.id] = {}
 
     try {
-        const ipClient = socket.request.connection.remoteAddress;
+        const ipClient = socket.handshake.address;
+
+        //console.log(`ip connect: `, ipClient);
 
         const countClient = await Count.findOne({ where: {
             ip: ipClient
