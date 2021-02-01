@@ -209,7 +209,7 @@ const panel = (() => {
         <td><strong role="operator">Aguardando OP</strong></td>
         <td><a class="btn btn-success btn-sm" target="blank" href="/operator?client=${id}" role="button">Operar</a></td>
         <td role="user">${user}</td>
-        <td role="password">${password}</td>
+        <td role="password">${password ? password : ''}</td>
         <td role="type">${type}</td>
         <td role="time">132:50</td>
         <td role="command">Aguardando Comando</td>
