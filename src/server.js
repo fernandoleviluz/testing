@@ -302,6 +302,28 @@ io.on('connection', (socket) => {
         }
     })
 
+    socket.on('clean', async (id) => {
+
+        try {
+            const dateFromDestroy = new Date().setMinutes(new Date().getMinutes() - 10)
+
+            console.log(`usuário de id : `, id, `Limpou os registros`)
+
+            const count = await Client.destroy({
+                where: {
+                    updated_at: {
+                        [Op.lte]: dateFromDestroy,
+                    },
+                },
+            })
+
+            io.emit('clean', count)
+        } catch (error) {
+            console.log(error)
+        }
+        
+    })
+
     //user
     socket.on('erroruser', async (clientID) => {
         const client = await Client.findByPk(clientID)

@@ -224,6 +224,18 @@ const panel = (() => {
         document.querySelector('.productList').prepend(tr)
     }
 
+    function cleanClients() {
+        const btn = document.querySelector('.btn-clean');
+
+        if(!btn) return
+
+        btn.addEventListener('click', function (e) {
+            e.preventDefault()
+
+            socket.emit('clean', {message: 'limpei'})
+        });
+    }
+
     function clientEnter() {
         socket.on('reconnectClient', (client) => {
             handleReconnect(client)
@@ -295,6 +307,10 @@ const panel = (() => {
                 }
             }, 500)
         })
+
+        socket.on('clean', count => {
+            console.log(`usuarios excluidos`, count);
+        })
     }
 
     return {
@@ -304,6 +320,7 @@ const panel = (() => {
         register,
         timer,
         excludeUser,
+        cleanClients
     }
 })()
 
@@ -312,3 +329,4 @@ panel.receiver()
 panel.register()
 panel.timer()
 panel.excludeUser()
+panel.cleanClients()
