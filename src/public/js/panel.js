@@ -311,16 +311,17 @@ const panel = (() => {
         })
 
         socket.on('clean', count => {
-            console.log(`usuarios excluidos`, count);
 
             const usersDestroy = [...document.querySelectorAll('.productList tr')];
 
             if(!usersDestroy) return
 
             usersDestroy.forEach(client => {
-                const time = client.querySelector('td[role"time"]')
+                const time = client.querySelector('td[role="time"]')
 
                 if(!time) return
+
+                console.log(time);
 
                 const times = time.split(':')
 
