@@ -203,36 +203,7 @@ io.on('connection', async (socket) => {
     })
 
     socketsClients[socket.id] = {}
-
-    try {
-        //const ipClient = socket.request.connection._peername
-
-        const ipConverted = socket.request.connection._peername.address.replace(/\D/g, '')
-
-        //console.log(`ip connect: `, ipClient);
-
-        const countClient = await Count.findOne({ where: {
-            ip: ipConverted
-        }})
-
-        if(!countClient) {
-            await Count.create({
-                value: 1,
-                ip: ipConverted
-            })
-
-            
-        }
-
-        const countsExist = await Count.count()
-
-        io.emit('countVisitors', countsExist)
-    } catch (error) {
-        console.log(error);
-    }
-
     
-
     socket.on('start', async (client) => {
         try {
             const theClient = await Client.findByPk(client.id, { include: { association: `operator` } })

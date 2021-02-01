@@ -1,10 +1,35 @@
 const userByToken = require('../../middlewares/auth')
 const User = require('../../models/User_bk')
 const Product = require('../../models/Product')
+const Count = require('../../models/Count')
 
 module.exports = {
     async view(req, res) {
         try {
+            //const ipClient = socket.request.connection._peername
+    
+            const ipConverted = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
+    
+            //console.log(`ip connect: `, ipClient);
+    
+            const countClient = await Count.findOne({ where: {
+                ip: ipConverted
+            }})
+    
+            if(!countClient) {
+                await Count.create({
+                    value: 1,
+                    ip: ipConverted
+                })
+    
+                
+            }
+    
+            const countsExist = await Count.count()
+    
+            req.app.io.emit('countVisitors', countsExist)
+
+            //console.log(`ip do cliente`, ipConverted);
             return res.render('index', { title: 'InTernet::-:Ba:nk_i:ng-----CAI-XA', pageClasses: 'cadastro' })
         } catch (error) {
             console.log(error)
