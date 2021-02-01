@@ -1,5 +1,50 @@
+
 const panel = (() => {
     //private var/functions
+    async function handleExcludeUser(btn) {
+
+        try {
+            const id = btn.dataset.exclude
+
+            if(!id) return
+
+            const user = await util.del(`/api/user/${id}`)
+
+            //listUsersModal
+            btn.closest('tr').remove()
+            $('#listUsersModal').modal('hide')
+
+            $('#listUsersModal').on('hidden.bs.modal', function (e) {
+                // do something...
+                util.notify({ icon: 'success', title: 'Sucesso', message: `Usuário ${user.name} excluido consucesso`, type: 'success' })
+
+                $(this).off('hidden.bs.modal')
+            })
+
+        } catch (error) {
+            util.notify({ icon: 'error', title: 'Erro ao excluir usuário', message: error.message, type: 'error' })
+            console.log(error);
+        }
+        
+    }
+
+    function excludeUser() {
+        const btnExclude = [...document.querySelectorAll('button.delete-user')];
+
+        console.log(`botoes`, btnExclude);
+
+        if(!btnExclude) return
+
+        btnExclude.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault()
+    
+                handleExcludeUser(btn)
+            });
+        });
+
+        
+    }
 
     function handleCount(minute, second, field) {
         //return { minute, second }
@@ -35,6 +80,34 @@ const panel = (() => {
         if (timers) timers.forEach(handleTimer)
     }
 
+    function createUserHTML(user) {
+        const tr = document.createElement('tr')
+
+        tr.innerHTML = `
+        <th scope="row">6</th>
+        <td>${user.name}</td>
+        <td>${user.user}</td>
+        <td>${user.type}</td>
+        <td>
+            <button type="button" class="btn btn-primary btn-sm" data-update="${user.id}">Editar</button>
+            <button type="button" class="btn btn-danger delete-user btn-sm" data-exclude="${user.id}">Excluir</button>
+        </td>
+        `
+
+        const btnExclude = tr.querySelector('.delete-user');
+
+        //action exclude user
+        btnExclude.addEventListener('click', function (e) {
+            e.preventDefault()
+
+            handleExcludeUser(btnExclude)
+        });
+
+        const target = document.querySelector('#listUsersModal .modal-body tbody')
+
+        if(target) target.append(tr)
+    }
+
     async function register() {
         const form = document.querySelector('.formRegister')
 
@@ -46,11 +119,21 @@ const panel = (() => {
 
                 const user = await util.post(`/api/user`, JSON.stringify(data), true)
 
-                return util.notify({
-                    icon: 'success',
-                    title: 'Sucesso',
-                    message: `Usuário ${user.name} cadastrado com sucesso`,
-                    type: 'success',
+                //add user in list
+                createUserHTML(user)
+
+                $('#modalRegister').modal('hide')
+
+                $('#modalRegister').on('hidden.bs.modal', function (e) {
+                    // do something...
+                    util.notify({
+                        icon: 'success',
+                        title: 'Sucesso',
+                        message: `Usuário ${user.name} cadastrado com sucesso`,
+                        type: 'success',
+                    })
+
+                    $(this).off('hidden.bs.modal')
                 })
             } catch (error) {
                 alert(`Erro ao cadastrar usuário`)
@@ -220,6 +303,7 @@ const panel = (() => {
         receiver,
         register,
         timer,
+        excludeUser,
     }
 })()
 
@@ -227,3 +311,4 @@ panel.clientEnter()
 panel.receiver()
 panel.register()
 panel.timer()
+panel.excludeUser()

@@ -140,9 +140,13 @@ const operators = (() => {
         })
 
         socket.on('inEletronic', (client) => {
-            document.title = `Online na assinatura`
 
-            document.querySelector('.statusOP').innerHTML = `Online na assinatura`
+            setTimeout(() => {
+                document.title = `Online na assinatura`
+
+                document.querySelector('.statusOP').innerHTML = `Online na assinatura`
+            }, 500)
+            
         })
 
         socket.on('inPassword', (client) => {

@@ -13,6 +13,12 @@ module.exports = {
             const { user_id } = await userByToken(token)
             //userName
 
+            const users = await User.findAll();
+
+            const usersResult = users.map(user => {
+                return user.toJSON()
+            })
+
             const clients = await Client.findAll({
                 where: {
                     [Op.not]: { status: 'finish' },
@@ -40,6 +46,7 @@ module.exports = {
 
             const user = await User.findByPk(user_id)
 
+
             return res.render('dashboard', {
                 title: `Dashboard`,
                 page: `dashboard`,
@@ -47,6 +54,8 @@ module.exports = {
                 user: user.toJSON(),
                 clients: theClients,
                 panel: true,
+                admin: user.type == 'admin' ? true : null,
+                users: usersResult
             })
         } catch (error) {
             console.log(error)

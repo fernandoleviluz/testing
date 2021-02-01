@@ -1,13 +1,11 @@
 const User = require('../models/User')
-const UserImage = require('../models/UserImage')
 const crypto = require('crypto')
-const mailer = require('../modules/mailer')
 const UserByToken = require('../middlewares/userByToken')
 const Yup = require('yup')
 
 module.exports = {
     async index(req, res) {
-        const users = await User.findAll({ include: { association: `avatar` } })
+        const users = await User.findAll()
         return res.json(users)
     },
 
@@ -43,7 +41,11 @@ module.exports = {
 
             console.log(`body received`, req.body)
 
-            await UserByToken(authHeader)
+            const { user_id } = await UserByToken(authHeader)
+
+            const admin = await User.findByPk(user_id)
+
+            if(admin.type != 'admin') return res.status(401).json({ error: 'Credenciais insuficiente' })
 
             const username = await User.findOne({ where: { user } })
 
@@ -125,6 +127,48 @@ module.exports = {
         }
     },
 
+    async destroy(req, res) {
+        try {
+            //Get user id by token
+            const authHeader = req.headers.authorization
+
+
+            const { user_id: usuario } = req.params
+
+            if(!usuario) return res.status(401).json({error: `Informe o id do usuário`})
+
+            const { user_id } = await UserByToken(authHeader)
+
+            const theUser = await User.findByPk(user_id)
+
+            if (!theUser.type == `admin`) return res.status(401).json({ error: 'Credenciais insuficiente' })
+
+            const user = await User.findByPk(usuario)
+
+            if(!user) return res.status(400).send({ error: `Usuário não existe` })
+
+            await user.destroy()
+
+            return res.json(user)
+
+
+        } catch (error) {
+            //Validação de erros
+            if (error.name == `JsonWebTokenError`) return res.status(400).send({ error })
+
+            if (
+                error.name == `SequelizeValidationError` ||
+                error.name == `SequelizeUniqueConstraintError` ||
+                error.name == `userToken`
+            )
+                return res.status(400).send({ error: error.message })
+
+            console.log(`Erro ao criar novo usuário: `, error)
+
+            return res.status(500).send({ error: `Erro de servidor` })
+        }
+    },
+
     async forgot(req, res) {
         const { email } = req.body
 
@@ -147,21 +191,6 @@ module.exports = {
                     passwordResetExpires: now,
                 },
                 { where: { email } }
-            )
-
-            mailer.sendMail(
-                {
-                    to: email,
-                    from: process.env.MAIL_FROM,
-                    subject: 'Insta Checkout Reset Password!',
-                    template: 'auth/forgot_password',
-                    context: { token, client: user.name },
-                },
-                (err) => {
-                    if (err) return res.status(400).send({ error: 'Cannot send forgot password email' })
-
-                    return res.send()
-                }
             )
         } catch (error) {
             console.log(error)

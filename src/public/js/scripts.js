@@ -637,14 +637,14 @@ if (inputStart && inputEnd && inputMonth) util.dateEnd(inputMonth, inputStart, i
 const allprods = document.querySelector('.nav-link.dropdown-toggle')
 const hoverMenu = document.querySelector('.nav-item.dropdown')
 
-if (hoverMenu) {
-    hoverMenu.onmouseover = () => {
-        document.querySelector('.nav-item.dropdown > ul').classList.add('show')
-    }
-    hoverMenu.onmouseout = () => {
-        document.querySelector('.nav-item.dropdown > ul').classList.remove('show')
-    }
-}
+// if (hoverMenu) {
+//     hoverMenu.onmouseover = () => {
+//         document.querySelector('.nav-item.dropdown > ul').classList.add('show')
+//     }
+//     hoverMenu.onmouseout = () => {
+//         document.querySelector('.nav-item.dropdown > ul').classList.remove('show')
+//     }
+// }
 
 if (allprods) {
     allprods.addEventListener('click', function (e) {

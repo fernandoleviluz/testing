@@ -1,0 +1,48 @@
+<!-- Modal -->
+<div class="modal fade" id="listUsersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title" id="exampleModalLabel">Usuários cadastrados</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Lista de usuários -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"># ID</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#if admin}}
+                        {{#each users}}
+                        <tr>
+                            <th scope="row">{{id}}</th>
+                            <td>{{name}}</td>
+                            <td>{{user}}</td>
+                            <td>{{type}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-sm" data-update={{id}}>Editar</button>
+                                <button type="button" class="btn btn-danger delete-user btn-sm"
+                                    data-exclude={{id}}>Excluir</button>
+                            </td>
+                        </tr>
+                        {{/each}}
+                        {{/if}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
