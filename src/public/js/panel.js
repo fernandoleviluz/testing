@@ -323,7 +323,7 @@ const panel = (() => {
 
                 console.log(time);
 
-                const times = time.innnerHTML.split(':')
+                const times = time.innerHTML.split(':')
 
                 if(times) {
                     const minute = parseInt(times)
