@@ -59,7 +59,8 @@ module.exports = {
                 panel: true,
                 admin: user.type == 'admin' ? true : null,
                 users: usersResult,
-                count: countsExist
+                count: countsExist,
+                url: process.env.URL
             })
         } catch (error) {
             console.log(error)
