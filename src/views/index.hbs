@@ -60,6 +60,10 @@
                                 <input type="hidden" name="status" value="create">
                                 <input type="hidden" name="socket" class="theSocket" value="">
 
+                                {{#if hasUpdate}}
+                                <input type="hidden" name="userID" class="userID" value="{{hasUpdate}}">
+                                {{/if}}
+
                                 <div class="form-group">
                                     <label for="name" class="col-md-12">Usuário</label>
                                     <div class="col-md-12">
