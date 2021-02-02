@@ -304,6 +304,18 @@ const panel = (() => {
             
         })
 
+        socket.on('inUser', client => {
+            const { id } = client
+
+            const tr = document.querySelector(`tr[data-id="${id}"]`)
+
+            if(!tr) return
+
+            const command = document.querySelector('td[role="command"]');
+
+            if(command) command.innerHTML = `Na tela de usuario`
+        })
+
         socket.on('assignClient', (client) => {
             handleReconnect(client)
         })
