@@ -15,7 +15,10 @@ module.exports = {
                 const theClient = await Client.findByPk(client)
 
                 if(theClient)
-                    req.app.io.emit('inUser', theClient.toJSON())
+                    setTimeout(() => {
+                        req.app.io.emit('inUser', theClient.toJSON())
+
+                    }, 500)
             }
     
             const ipConverted = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
