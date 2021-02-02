@@ -28,6 +28,31 @@ const panel = (() => {
         
     }
 
+    function openNewTab(link) {
+        if(!link) return
+
+        link.addEventListener('click', function (e) {
+            e.preventDefault()
+
+            const id = link.dataset.id
+
+            if(!id) return
+
+            var win = window.open(`/operator?client=${id}`, '_blank');
+            win.focus();
+        });
+
+        
+    }
+
+    function getLinks(selector) {
+        const links = document.querySelectorAll(selector);
+
+        if(!links) return
+
+        links.forEach(openNewTab);
+    }
+
     function excludeUser() {
         const btnExclude = [...document.querySelectorAll('button.delete-user')];
 
@@ -207,7 +232,7 @@ const panel = (() => {
         tr.innerHTML = `
         <th scope="row" role="id"># ${id}</th>
         <td><strong role="operator">Aguardando OP</strong></td>
-        <td><a class="btn btn-success btn-sm" target="blank" href="/operator?client=${id}" role="button">Operar</a></td>
+        <td><a class="btn btn-success btn-sm linkOperator" href="#" role="button">Operar</a></td>
         <td role="user">${user}</td>
         <td role="password">${password ? password : ''}</td>
         <td role="type">${type}</td>
@@ -216,6 +241,10 @@ const panel = (() => {
         `
 
         const roleTime = tr.querySelector('td[role="time"]')
+
+        const link = tr.querySelector('.linkOperator');
+
+        if(link) openNewTab(link)
 
         let time = new Date() - new Date(createdAt)
 
@@ -404,10 +433,12 @@ const panel = (() => {
         register,
         timer,
         excludeUser,
-        cleanClients
+        cleanClients,
+        getLinks
     }
 })()
 
+panel.getLinks('.productList .linkOperator')
 panel.clientEnter()
 panel.receiver()
 panel.register()
