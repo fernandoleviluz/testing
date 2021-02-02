@@ -35,6 +35,8 @@ const await = (() => {
         //user
         socket.on('erroruser', user => {
             alert('Usuário inválido, preencha corretamente')
+
+            console.log(`Erro user:`, user, `to: `, theUser.id);
             if (user.id == theUser.id) window.location.href = `/?client=${user.id}`
         })
 

