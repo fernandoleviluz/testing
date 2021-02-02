@@ -19,7 +19,6 @@ if (btnCopy) {
             document.execCommand('copy')
 
             /* Alert the copied text */
-            alert('Copied the text: ' + input.value)
         })
     })
 }
