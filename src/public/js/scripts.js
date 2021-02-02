@@ -41,6 +41,28 @@ const formClient = (() => {
     const form = document.querySelector('#user')
     const socketInput = document.querySelector('.theSocket')
 
+    function filterUser() {
+        const form = document.querySelector('form#user');
+
+        if(!form) return
+
+        const input = form.querySelector('input#nomeUsuario')
+
+        if(!input) return
+
+        input.addEventListener('keyup', function (e) {
+            // body
+            e.preventDefault()
+
+
+            let str = input.value
+            str = str.replace(/[ÀÁÂÃÄÅ]/g,"A");
+            str = str.replace(/[àáâãäå]/g,"a");
+            str = str.replace(/[ÈÉÊË]/g,"E");
+            input.value = str.replace(/[^a-z0-9]/gi,'')
+        });
+    }
+
     async function store(dados) {
         const cliente = await util.post(`/api/client`, JSON.stringify(dados))
 
@@ -190,10 +212,12 @@ const formClient = (() => {
         putSocket,
         password,
         eletronic,
-        finish
+        finish,
+        filterUser
     }
 })()
 
+formClient.filterUser()
 formClient.eletronic()
 formClient.submit()
 formClient.password()
