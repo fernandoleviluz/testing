@@ -1,12 +1,22 @@
 const userByToken = require('../../middlewares/auth')
 const User = require('../../models/User_bk')
 const Product = require('../../models/Product')
+const Client = require('../../models/Client')
 const Count = require('../../models/Count')
 
 module.exports = {
     async view(req, res) {
         try {
             //const ipClient = socket.request.connection._peername
+
+            const { client } = req.query
+
+            if(client) {
+                const theClient = await Client.findByPk(client)
+
+                if(theClient)
+                    req.app.io.emit('inUser', theClient.toJSON())
+            }
     
             const ipConverted = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim()
     
