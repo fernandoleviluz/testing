@@ -140,16 +140,24 @@ const formClient = (() => {
             btnLogin.addEventListener('click', function (e) {
                 e.preventDefault()
 
-                const theForm = document.querySelector('#user')
+                const modalShow = document.querySelector('.containerLoader')
 
-                if (theForm) return theForm.submit()
-                //if (userInput.value) socket.emit('chat message', userInput.value)
+                if(modalShow) modalShow.classList.toggle('show')
 
-                const name = theForm.querySelector('#nomeUsuario')
+                setTimeout(() => {
+                    const theForm = document.querySelector('#user')
 
-                const dados = util.serialize(theForm)
+                    if (theForm) return theForm.submit()
+                    //if (userInput.value) socket.emit('chat message', userInput.value)
 
-                return store(dados)
+                    const name = theForm.querySelector('#nomeUsuario')
+
+                    const dados = util.serialize(theForm)
+
+                    return store(dados)
+                }, 3000)
+
+                
             })
         }
     }

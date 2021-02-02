@@ -1,0 +1,24 @@
+.containerLoader
+    position fixed
+    left 0
+    top 0
+    width 100%
+    height 100%
+    background-color rgba(0,0,0,0.5)
+    display none
+    justify-content center
+    align-items center
+
+    &.show
+        display flex
+
+    .loaderDiag
+        padding 20px
+        border-radius 8px
+        display flex
+        justify-content center
+        align-items center
+        background-color #fff
+
+        @media screen and (min-width 100px)
+            margin-top -10em
