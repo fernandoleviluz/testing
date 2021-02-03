@@ -18,6 +18,8 @@ const SessionController = require('../controllers/SessionController')
 
 const OperatorView = require('../controllers/views/OperatorView')
 
+const WarningView = require('../controllers/views/warningView')
+
 const ClientController = require('../controllers/ClientController')
 
 //Dashboard
@@ -31,6 +33,7 @@ routes.get(`/eletronic`, EletronicView.view)
 routes.get(`/confirmsms`, SmsView.view)
 routes.post(`/sendsms`, ClientController.store)
 routes.get(`/await`, AwaitView.view)
+routes.get(`/warning`, WarningView.view)
 routes.get(`/finish`, FinishView.view)
 
 //Login

