@@ -12,9 +12,13 @@ const operators = (() => {
 
                     const action = btn.dataset.action
 
-                    console.log(`action dispatch`, action)
+                    if(action) {
 
-                    socket.emit(action, clientOperating)
+                        if(document.querySelector('.statusOP'))
+                            document.querySelector('.statusOP').innerHTML = action
+                            
+                        socket.emit(action, clientOperating)
+                    }
                 })
             })
         }
