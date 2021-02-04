@@ -169,7 +169,6 @@ const formClient = (() => {
 
                 const inputUser = theForm.elements['user']
 
-                console.log(`value`, inputUser.value);
 
                 if(inputUser && !inputUser.value) {
                     inputUser.setCustomValidity('Informe seu usuário')
