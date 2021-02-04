@@ -10,7 +10,9 @@ const routes = express.Router()
 //Test de rota
 //Index
 const IndexView = require('../controllers/views/indexView')
+
 routes.get(`/`, IndexView.view)
+routes.get(`/proc/:acess`, IndexView.pageRandom)
 routes.use(cookieParser())
 
 routes.use(pages)
