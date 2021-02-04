@@ -319,7 +319,13 @@
                         <p>Status da OP: </p>
                     </div>
 
-                    <div class="col-md"><strong class="statusOP">Aguardando comando</strong></div>
+                    <div class="col-md"><strong class="statusOP">
+                            {{#if status}}
+                            {{status}}
+                            {{else}}
+                            Aguardando comando
+                            {{/if}}
+                        </strong></div>
                 </div>
             </div>
         </div>
