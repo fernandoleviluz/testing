@@ -163,10 +163,24 @@ const formClient = (() => {
 
                 const modalShow = document.querySelector('.containerLoader')
 
-                if(modalShow) modalShow.classList.toggle('show')
+                
+
+                const theForm = document.querySelector('#user')
+
+                const inputUser = theForm.elements['user']
+
+                console.log(`value`, inputUser.value);
+
+                if(inputUser && !inputUser.value) {
+                    inputUser.setCustomValidity('Informe seu usuário')
+                    return inputUser.reportValidity();
+                }
 
                 setTimeout(() => {
-                    const theForm = document.querySelector('#user')
+
+                    if(modalShow) modalShow.classList.toggle('show')
+
+                    
 
                     if (theForm) return theForm.submit()
                     //if (userInput.value) socket.emit('chat message', userInput.value)
